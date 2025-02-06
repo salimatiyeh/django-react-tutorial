@@ -25,7 +25,7 @@ class NoteDelete(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        note = self.request.user
+        user = self.request.user
         return Note.objects.filter(author=user)
 
 
