@@ -1,3 +1,5 @@
+import "../styles/Home.css";
+
 import { useState, useEffect } from "react";
 import api from "../api";
 import Note from "../components/Note"
