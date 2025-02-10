@@ -1,4 +1,5 @@
 import "../styles/Home.css";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 import { useState, useEffect } from "react";
 import api from "../api";
@@ -9,6 +10,8 @@ function Home() {
   const [notes, setNotes] = useState([])
   const [content, setContent] = useState("")
   const [title, setTitle] = useState("")
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     getNotes();
@@ -32,12 +35,14 @@ function Home() {
 
   const createNote = (e) => {
     e.preventDefault()
+    setLoading(true);
     api.post("/api/notes/", {content, title}).then((res) => {
       if (res.status === 201) alert("Note created!")
         else alert("Failed to make note.")
       getNotes();
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert(err))
+    .finally(() => setLoading(false))
   }
 
 
@@ -71,6 +76,7 @@ function Home() {
               value={content}
             ></textarea>
             <br />
+            {loading && <LoadingIndicator />}
             <input type="submit" value="submit"></input>
             </form>
           </div>
